@@ -1,0 +1,7 @@
+# E0b: the L3 claim. E0 without the shared fact z.
+# Expect: agreement high, correctness low (constant cross-cut offset), no fires on cut edges.
+base = "e0.toml"
+name = "e0b_no_common_ground"
+
+[disclosure]
+params = { groups = { X = ["x"], Y = ["y"] } }

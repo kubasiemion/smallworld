@@ -1,0 +1,36 @@
+# E3: as E1, plus a full-resolution hub (agent 6) adjacent to everyone, seeing only z.
+# Expect holonomy and offset to collapse on cycles through the hub.
+base = "e1.toml"
+name = "e3"
+
+[disclosure]
+params = { groups = { X = ["x", "z"], Y = ["y", "z"], H = ["z"] } }
+
+[[agents]]
+id = 0
+group = "X"
+resolution = 12
+[[agents]]
+id = 1
+group = "X"
+resolution = 4
+[[agents]]
+id = 2
+group = "X"
+resolution = 3
+[[agents]]
+id = 3
+group = "Y"
+resolution = 4
+[[agents]]
+id = 4
+group = "Y"
+resolution = 3
+[[agents]]
+id = 5
+group = "Y"
+resolution = 12
+[[agents]]
+id = 6
+group = "H"
+resolution = 12

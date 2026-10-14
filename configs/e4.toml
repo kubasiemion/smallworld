@@ -1,0 +1,6 @@
+# E4: as E1 with bare repair: a fire says only "wrong", each side re-guesses.
+base = "e1.toml"
+name = "e4"
+
+[repair]
+class = "smallworld.impl.repairs.BareRepair"

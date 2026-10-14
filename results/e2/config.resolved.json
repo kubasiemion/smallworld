@@ -1,0 +1,128 @@
+{
+  "name": "e2",
+  "seed": 1,
+  "rounds": 200,
+  "k": 12,
+  "cut": [
+    [
+      2,
+      3
+    ],
+    [
+      0,
+      4
+    ],
+    [
+      2,
+      4
+    ]
+  ],
+  "world": {
+    "class": "smallworld.impl.zk_world.UniformZk",
+    "params": {
+      "facts": [
+        "x",
+        "y",
+        "z"
+      ]
+    }
+  },
+  "disclosure": {
+    "class": "smallworld.impl.split_disclosure.GroupDisclosure",
+    "params": {
+      "groups": {
+        "X": [
+          "x",
+          "z"
+        ],
+        "Y": [
+          "y",
+          "z"
+        ]
+      }
+    }
+  },
+  "task": {
+    "class": "smallworld.impl.diff_task.Difference",
+    "params": {
+      "a": "x",
+      "b": "y"
+    }
+  },
+  "factor": {
+    "class": "smallworld.impl.resolution_factor.ResolutionFactor"
+  },
+  "agent": {
+    "class": "smallworld.impl.relay_agent.RelayAgent"
+  },
+  "watchdog": {
+    "class": "smallworld.impl.default_watchdog.DefaultWatchdog",
+    "params": {
+      "intensity": 1.0,
+      "horizon": 1
+    }
+  },
+  "repair": {
+    "class": "smallworld.impl.repairs.NamedRepair"
+  },
+  "topology": {
+    "class": "smallworld.impl.topologies.Groups",
+    "params": {
+      "extra": [
+        [
+          2,
+          3
+        ],
+        [
+          0,
+          4
+        ],
+        [
+          2,
+          4
+        ]
+      ]
+    }
+  },
+  "scheduler": {
+    "class": "smallworld.impl.schedulers.RandomSweeps",
+    "params": {
+      "sweeps": 3
+    }
+  },
+  "observer": {
+    "class": "smallworld.impl.zk_observer.ZkObserver"
+  },
+  "agents": [
+    {
+      "id": 0,
+      "group": "X",
+      "resolution": 12
+    },
+    {
+      "id": 1,
+      "group": "X",
+      "resolution": 4
+    },
+    {
+      "id": 2,
+      "group": "X",
+      "resolution": 3
+    },
+    {
+      "id": 3,
+      "group": "Y",
+      "resolution": 4
+    },
+    {
+      "id": 4,
+      "group": "Y",
+      "resolution": 3
+    },
+    {
+      "id": 5,
+      "group": "Y",
+      "resolution": 12
+    }
+  ]
+}

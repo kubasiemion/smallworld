@@ -1,0 +1,30 @@
+# E1: heterogeneity of resolution, everything else as E0.
+# Expect: invisible edge error, holonomy on cut-crossing cycles, agreement above correctness.
+base = "e0.toml"
+name = "e1"
+rounds = 200
+
+[[agents]]
+id = 0
+group = "X"
+resolution = 12
+[[agents]]
+id = 1
+group = "X"
+resolution = 4
+[[agents]]
+id = 2
+group = "X"
+resolution = 3
+[[agents]]
+id = 3
+group = "Y"
+resolution = 4
+[[agents]]
+id = 4
+group = "Y"
+resolution = 3
+[[agents]]
+id = 5
+group = "Y"
+resolution = 12

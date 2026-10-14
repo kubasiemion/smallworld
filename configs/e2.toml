@@ -1,0 +1,8 @@
+# E2: as E1, plus a chord 2-4 that makes triangle 0-2-4 straddle the cut,
+# so a triad can path-check across it. Compare holonomy on filled vs unfilled cycles with E1.
+base = "e1.toml"
+name = "e2"
+cut = [[2, 3], [0, 4], [2, 4]]
+
+[topology]
+params = { extra = [[2, 3], [0, 4], [2, 4]] }
