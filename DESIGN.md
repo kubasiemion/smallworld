@@ -165,3 +165,68 @@ law is frame-bound, so these runs use gauge 0 (`default_gauge`); errors live
 in the initial translations. New optional hooks, all defaulting to the old
 behaviour: `Verdict.disputes`, `Agent.receive_dispute`, `Agent.held`, config
 key `default_gauge`. `LawObserver` adds per-fact measures.
+
+**A3 (draft, 2026-10-14), agents that (barely) learn.**
+
+*Purpose.* Let factors grow. An agent's factor is a set of primes; its
+resolution is their product. A prime is a constraint (a dimension), and
+passing one is teaching a dimension, not a value (W-core §6, §7). Nothing is
+ever forgotten: with unbounded learning everyone converges on the full
+factor, and all that remains is topology (holonomy). The measurement is how
+far the primes have spread when the process halts: on agreement (nothing left
+to teach) or on an exhausted budget.
+
+*Components* (all new; old runs untouched):
+
+- **`LearningFactor`**: a prime set P over a squarefree k; resolution ∏P;
+  `learn(p)` adds p; no `forget`.
+- **`TeachingAgent`** (a MergeAgent), keeping per fact the suppliers of the
+  current class with their precision tags (provenance), and the last tag
+  seen from each neighbour (its W′ of that neighbour's factor). Three
+  triggers, each a switch:
+  - **T1, objection.** After an objection, either end may offer a prime to
+    the other.
+  - **T2, low value** ("you're not getting it"). On receiving a class whose
+    modulus is thin relative to what the agent holds,
+    gcd(n_in, n_held) / n_held < τ, with probability ι, offer a prime to the
+    sender. (Default: relative τ; an absolute threshold is a later option.)
+  - **T3, upstream push.** An agent offered a prime it already holds, while
+    holding the fact without that prime ("I have it, nobody gave it to me"),
+    passes the offer to those suppliers whose tags lacked it. Each push
+    chain carries a request id; an agent already visited for that id drops
+    it; a hop limit is the backstop. A chain can only end at an agent whose
+    factor lacks the prime (the bottleneck), or at no learner at all (the
+    prime was discarded en route).
+- **Offer selection**: a prime the teacher holds that the receiver's last
+  tag lacks; if none, no offer.
+- **Uptake**: an agent offered a prime it lacks learns it with probability
+  u; otherwise the offer is wasted (logged).
+- **Delivery**: synchronous, within the exchange that triggered it, as for
+  objections and disputes.
+
+*Events*: `Teach(src, dst, prime, trigger, req)` with trigger ∈ {objection,
+low_value, upstream}; `Learn(agent, prime)`.
+
+*Runner*: optional hooks with no-op defaults (`Agent.offer`,
+`Agent.receive_teaching`, `Verdict.teaches`); optional halting,
+`[halt] quiet = true` (stop at the first round after round 0 with no Teach)
+and `budget = N` (stop when cumulative Teach events reach N).
+
+*Observer* (`LearningObserver`): primes per agent and in total; factor
+heterogeneity (mean pairwise Jaccard distance of prime sets); Teach per
+trigger; Learn; wasted offers; push chains ending at a learner vs at none;
+pressure per agent (offers received and not taken up); the round and reason
+the run halted.
+
+*Experiment E11*: the E1 topology (two groups, shared z, task x − y), k = 30030
+= 2·3·5·7·11·13, each agent starting with a random 2–4 primes, gauge 0,
+translations random antisymmetric, u = 0.5, τ = 0.5, ι = 0.3.
+Arms: T1 only; T2 only; T1+T2; T1+T2+T3.
+
+*Predictions*: T1 only halts early, at agreement, with few primes spread
+(agreement switches teaching off). T2 keeps going and raises conflict right
+after learning, because a newly claimed prime arrives uncalibrated and
+exposes twist that lay outside every claim. T3 finds bottlenecks; pressure
+concentrates on the cut.
+
+*Out of scope*: capacity and forgetting, delayed delivery, stakes.
