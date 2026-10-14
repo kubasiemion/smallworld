@@ -229,4 +229,7 @@ after learning, because a newly claimed prime arrives uncalibrated and
 exposes twist that lay outside every claim. T3 finds bottlenecks; pressure
 concentrates on the cut.
 
-*Out of scope*: capacity and forgetting, delayed delivery, stakes.
+*Out of scope*: capacity and forgetting, delayed delivery, stakes; and
+teaching by example (passing the residue mod q along with q). A taught prime
+is a bare dimension: its content arrives through ordinary messages, translated
+and open to objection, not as an unchecked claim at the moment of learning.
