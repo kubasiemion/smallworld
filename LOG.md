@@ -367,3 +367,15 @@ edge happened to fire. Detection requires a checker that holds a prime both
 paths carry. This qualifies L28: honest moduli make the twist harmless only
 where something calibrates the edges (E1–E3 had the shared fact z on every
 edge); on the ring nothing does.
+
+**L36. What a message carries (clarification).** The gauge enters once, at
+reading: (v + θ) mod m. A writer passes its value as it holds it, in its own
+frame, and does not add θ again; the receiver adds its translation g. So the
+gauge is a fixed relabeling, not a drift. But what is passed on is already
+biased, in two layers the receiver cannot tell apart: the writer's frame
+(intended; g is meant to undo it) and inherited translation error, Σ e along
+the path the belief has travelled so far (unknown to the writer, who holds it
+as simply its own value). One g per sender treats both as "the sender's
+frame", so each hop adds its edge error to an unlabelled sum. Honest moduli
+(MergeAgent) make messages honest about how much is known, not about whose
+frame the value is really in. This is the mechanism under L35.
