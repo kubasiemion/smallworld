@@ -1,0 +1,10 @@
+# E5d: as E5c (complement resolutions), plus a chord 2-5. Exchanged after both
+# ends have received from their ring neighbours, before the fronts meet at 3-4.
+base = "e5c_ring_complement.toml"
+name = "e5d_ring_chord"
+
+[topology]
+params = { dense = false, extra = [[0,1],[1,2],[2,3],[3,4],[4,5],[5,6],[0,6],[2,5]] }
+
+[scheduler]
+params = { order = [[0,1],[0,6],[1,2],[6,5],[2,5],[5,2],[2,3],[5,4],[3,4],[4,3]] }

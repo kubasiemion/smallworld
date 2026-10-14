@@ -137,3 +137,53 @@ which belief to revise, and weights (entrenchment) decide. So an asymmetric
 policy is a weighted distribution of δ over the corrected party's adjustable
 state, not a sign flip. First step when we get there: an antisymmetry-defect
 measure e_ij + e_ji in the Observer.
+
+## 2026-10-14, E5 ring
+
+**L22. E5: one fact on a ring of seven.** Only agent 0 sees z; the wave runs
+outward both ways in a fixed order (new `Fixed` scheduler, `Identity` task).
+All gauges 0 and translations start correct, so precision is the only thing in
+play. k = 510510. A: resolutions are distinct primes (2,3,5,7,11,13,17), gcd 1
+on every edge. B: multiples of 6 (6,30,42,66,78,102,210), gcd 6 on every edge.
+Note "not prime" is not enough: neighbours sharing *different* factors lose
+the information after two hops, since the next hop keeps only the gcd of that
+edge. B shares one factor along the whole ring on purpose.
+
+Result (200 rounds, `python -m smallworld.propagation results/e5*`):
+- Fires 0, objections 0 in both arms. Checks compare at gcd; in A that is 1,
+  in B the paths agree mod 6 by construction. Nothing is detected, nothing is
+  repaired.
+- Right at own resolution: A is at chance (1/m) for every agent. B is at ≈ m₀/m
+  (0.23 … 0.04), well above chance 1/m but still mostly wrong, and it falls
+  with m, not with hop distance (agent 6 is one hop out and the worst).
+  This is the overconfident lift (L8): a value v ∈ [0, m₀) is read as exact
+  in ℤ_m, so it is right only when z mod m happens to be < m₀.
+- Right at gcd(m, m₀): 1.00 for everyone in B (z mod 6 reaches all seven).
+  In A the gcd is 1, so the invariant is empty.
+- So the ring carries exactly the common factor and nothing more, in both
+  arms, and no agent can tell how much that is. Silent wrong stays at 0.7–0.9.
+
+**L23. E5c: complement resolutions.** Same ring, agent i has m_i = k / p_i, so
+it resolves every prime of k except its own. Neighbours share k/(p_i p_j).
+`propagation` now reports the *path ceiling*, the gcd of resolutions along the
+first-delivered chain back to the source (L22's per-source gcd was too generous
+for multi-hop). Ceilings: 85085, 17017, 2431 going one way (agents 1–3); 15015,
+1155, 105 the other (6, 5, 4). Agents are right at their ceiling 100% of the
+time, and at their own resolution 0.48, 0.32, 0.20 / 0.48, 0.04, 0.04. Each
+hop costs one prime; the ring carries k / (product of primes on the path).
+First case with fires: a path check at the meeting point (agent 4 against 3)
+fires in ~90% of rounds, delta ~3000 and different each round. It is a
+precision conflict (two paths with different missing primes), but it is
+objected to as a translation error (L10, L14), so g(3,4) is moved by a
+different amount every round and keeps two visible edge errors alive for all
+200 rounds. The ceilings stay intact, but the ring never converges: churn.
+
+**L24. E5d: chord 2–5 added to E5c.** Path ceilings, own-resolution accuracy
+and correctness are identical to E5c (0.36). The chord changes nothing about
+what agents know, because first come holds (L9): the second arrival is only
+path-checked, never merged. What it adds is a second churn site: agent 5
+against 2 fires in 177/200 rounds, next to 4 against 3 (179/200). Visible edge
+errors 3.6 (was 1.9), cycles with holonomy 2 (was 1). More paths with
+different missing primes means more conflicts, and the agent has nothing to
+do with them but misattribute them. A relay cannot gain from redundancy;
+combining beliefs (gcd/CRT-style) would be a different Agent.

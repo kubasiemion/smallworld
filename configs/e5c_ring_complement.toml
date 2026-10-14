@@ -1,0 +1,40 @@
+# E5c: as E5a, but agent i has resolution k / p_i: it resolves every prime
+# factor of k except its own p_i. Neighbours share k / (p_i p_j); the path from
+# the source keeps k / (product of the primes on it).
+base = "e5a_ring_coprime.toml"
+name = "e5c_ring_complement"
+[[agents]]
+id = 0
+group = "S"
+resolution = 255255
+gauge = 0
+[[agents]]
+id = 1
+group = "R"
+resolution = 170170
+gauge = 0
+[[agents]]
+id = 2
+group = "R"
+resolution = 102102
+gauge = 0
+[[agents]]
+id = 3
+group = "R"
+resolution = 72930
+gauge = 0
+[[agents]]
+id = 4
+group = "R"
+resolution = 46410
+gauge = 0
+[[agents]]
+id = 5
+group = "R"
+resolution = 39270
+gauge = 0
+[[agents]]
+id = 6
+group = "R"
+resolution = 30030
+gauge = 0

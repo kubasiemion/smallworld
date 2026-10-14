@@ -20,3 +20,14 @@ class RandomSweeps(Scheduler):
             order = directed[:]
             self.rng.shuffle(order)
             yield from order
+
+
+class Fixed(Scheduler):
+    """The same directed exchanges, in the same order, every round. `order` is
+    a list of [src, dst] pairs; the topology is not consulted."""
+
+    def __init__(self, order: list[list[int]]) -> None:
+        self.order = [(a, b) for a, b in order]
+
+    def exchanges(self, round: int, edges: list[tuple[AgentId, AgentId]]) -> Iterator[tuple[AgentId, AgentId]]:
+        yield from self.order

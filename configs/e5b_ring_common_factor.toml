@@ -1,0 +1,42 @@
+# E5b: as E5a, but every resolution is a multiple of 6, so every edge (and
+# every path) keeps gcd 6.
+# Expect: z mod 6 reaches every agent intact. Beyond that the lift is still
+# overconfident, so agents are right at their own resolution only at chance
+# 6/m-ish, and checks (which compare at gcd 6) stay quiet.
+base = "e5a_ring_coprime.toml"
+name = "e5b_ring_common_factor"
+[[agents]]
+id = 0
+group = "S"
+resolution = 6
+gauge = 0
+[[agents]]
+id = 1
+group = "R"
+resolution = 30
+gauge = 0
+[[agents]]
+id = 2
+group = "R"
+resolution = 42
+gauge = 0
+[[agents]]
+id = 3
+group = "R"
+resolution = 66
+gauge = 0
+[[agents]]
+id = 4
+group = "R"
+resolution = 78
+gauge = 0
+[[agents]]
+id = 5
+group = "R"
+resolution = 102
+gauge = 0
+[[agents]]
+id = 6
+group = "R"
+resolution = 210
+gauge = 0
