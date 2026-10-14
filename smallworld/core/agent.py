@@ -60,6 +60,11 @@ class Agent(ABC):
     def estimate(self) -> tuple[Optional[int], int]:
         """Task estimate in this agent's ℤ_resolution, or None if not computable."""
 
+    def set_translation(self, peer: AgentId, value: int) -> None:
+        """Initial conditions only: the runner sets a starting translation
+        before the first round. Never called during a run."""
+        self.g[peer] = value % self.k
+
     @abstractmethod
     def translation(self, peer: AgentId) -> int:
         """For the Observer only: this agent's current g for messages from `peer`."""

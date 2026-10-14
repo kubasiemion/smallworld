@@ -20,7 +20,12 @@ class ZkObserver(Observer):
     Holonomy of a cycle is Σ e along it; for a correct table it is 0.
     """
 
-    def __init__(self, agents: dict[int, Agent], edges: list[tuple[int, int]], k: int, cut: set[tuple[int, int]]) -> None:
+    def __init__(self, agents: dict[int, Agent], edges: list[tuple[int, int]], k: int, cut: set[tuple[int, int]],
+                 task=None) -> None:
+        """With `task`, correctness is judged in each agent's own frame: the
+        task evaluated on facts shifted by that agent's gauge. Without it, in
+        the world's frame (the same thing for gauge-invariant tasks)."""
+        self.task = task
         self.agents = agents
         self.edges = edges
         self.k = k
@@ -47,6 +52,7 @@ class ZkObserver(Observer):
 
     def end_round(self, round: int, tape: Tape) -> dict:
         truth = None
+        facts = {}
         estimates: list[Estimate] = []
         fires = {"reading": 0, "path": 0}
         objections, objection_size = 0, 0
@@ -56,6 +62,7 @@ class ZkObserver(Observer):
         for _, e in tape.events(round):
             if isinstance(e, Truth):
                 truth = e.target
+                facts = e.facts
             elif isinstance(e, Message):
                 messages += 1
             elif isinstance(e, Estimate):
@@ -71,7 +78,13 @@ class ZkObserver(Observer):
                 filled.add(frozenset((e.checker, e.a, e.b)))
 
         est = [e for e in estimates if e.value is not None]
-        correct = [((e.value - truth) % e.modulus) == 0 for e in est]
+        def frame_truth(agent: int) -> int:
+            if self.task is None:
+                return truth
+            th = self._theta(agent)
+            return self.task.combine({f: (v + th) % self.k for f, v in facts.items()}, self.k)
+
+        correct = [((e.value - frame_truth(e.agent)) % e.modulus) == 0 for e in est]
         silent_wrong = sum(1 for e, c in zip(est, correct) if not c and e.agent not in involved)
         chance = sum(1 / e.modulus for e in est) / max(1, len(est))
         pairs = list(combinations(est, 2))

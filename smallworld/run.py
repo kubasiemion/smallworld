@@ -14,7 +14,7 @@ import random
 import tomllib
 
 from smallworld.core.tape import Tape
-from smallworld.core.types import Arm, Check, Estimate, Expire, Fire, Message, Objection, Truth
+from smallworld.core.types import Arm, Check, Estimate, Expire, Fire, Message, Objection, Setup, Truth
 
 
 def load_class(path: str):
@@ -71,9 +71,29 @@ def run(config: dict, out_dir: str | None = None) -> list[dict]:
         )
 
     cut = {tuple(sorted(e)) for e in config.get("cut", [])}
-    observer = build(config["observer"], rng, agents=agents, edges=edges, k=k, cut=cut)
+    # Initial translations. "zero" (default): every agent assumes its
+    # neighbours share its frame. "random_antisymmetric": each edge gets a
+    # random g for one direction and its negative for the other, so the
+    # edge is consistent but the cycle sums (holonomy) are arbitrary.
+    init = config.get("translations", {}).get("init", "zero")
+    if init == "random_antisymmetric":
+        trng = random.Random(config.get("translations", {}).get("seed", 0))
+        for a, b in edges:
+            v = trng.randrange(k)
+            agents[b].set_translation(a, v)
+            agents[a].set_translation(b, -v)
+    elif init != "zero":
+        raise ValueError(f"unknown translations.init: {init}")
+
+    observer = build(config["observer"], rng, agents=agents, edges=edges, k=k, cut=cut, task=task)
 
     tape = Tape()
+    tape.append(Setup(
+        round=-1,
+        gauges={i: a.factor.ground_truth_gauge() for i, a in agents.items()},
+        resolutions={i: a.factor.resolution for i, a in agents.items()},
+        translations={f"{p}>{i}": a.translation(p) for i, a in agents.items() for p in neighbours[i]},
+    ))
     measures = []
     for r in range(config["rounds"]):
         facts = world.draw(r)

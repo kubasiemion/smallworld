@@ -20,6 +20,16 @@ class Event:
 
 
 @dataclass(frozen=True)
+class Setup(Event):
+    """Initial conditions, written once at round -1. Observer-only, like Truth:
+    gauges, resolutions and initial translations ("i>j": g held by j for i)."""
+
+    gauges: dict = field(default_factory=dict)
+    resolutions: dict = field(default_factory=dict)
+    translations: dict = field(default_factory=dict)
+
+
+@dataclass(frozen=True)
 class Truth(Event):
     """Facts and task value for a round. Observer-only."""
 

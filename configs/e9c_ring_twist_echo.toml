@@ -1,0 +1,8 @@
+# E9c: as E9b, but breadth-first flood with retelling unless no gain (E8a):
+# the assembled class travels back out.
+base = "e9b_ring_twist.toml"
+name = "e9c_ring_twist_echo"
+
+[scheduler]
+class = "smallworld.impl.schedulers.Flood"
+params = { sources = [0], mode = "queue", retell = "always", stop_on = "no_gain" }

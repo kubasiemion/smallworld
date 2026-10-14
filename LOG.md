@@ -322,3 +322,48 @@ its neighbours already hold; and a relay never tells a belief back to its
 supplier. For a conflict to spread, the conflict has to be content: a message
 saying "these disagree", or an agent that adopts or flags the disputed value.
 Neither exists yet. The switch is ready; the agents have nothing to say with it.
+
+## 2026-10-14, gauge on the ring
+
+**L34. Frame-aware correctness; Setup on the tape.** The Identity task is not
+gauge-invariant, so E5–E8 were measurable only because all gauges were 0. The
+Observer now judges correctness in each agent's own frame (the task on facts
+shifted by its gauge); for x − y that is the same as before, and every earlier
+run reproduces. The tape opens with a `Setup` event (gauges, resolutions,
+initial translations; Observer-only, like Truth). New config option
+`[translations] init = "zero" | "random_antisymmetric"`: the latter gives each
+edge a random g one way and −g the other, so every edge is consistent with
+itself and the holonomy around a cycle is arbitrary. `ring_explain` reports,
+prime by prime, whether each agent's residue matches its own-frame truth (O),
+the clockwise path (C) or the counter-clockwise path (W), replaying named
+objections to keep paths current.
+
+**L35. E9: a twist the ring cannot see becomes a class from two frames.**
+MergeAgent, single source, random gauges.
+
+- E9a, translations 0: edge errors are the gauge differences, a coboundary,
+  H = 0. Every residue of every agent is CW (both paths agree). Each agent is
+  off in its own frame by a constant: it holds z in the source's frame. No
+  fires. Nothing is wrong that anyone could mean: an agent that never reads z
+  has no frame of its own for z.
+- E9b, random antisymmetric translations: H = 363485. Still no fires: the
+  meeting point compares at gcd 1. Agent 4's class is 3:W 7:W 13:C 17:C,
+  assembled from the counter-clockwise path on some primes and the clockwise
+  path on others: right in neither frame. Agent 3, receiving it back, is mixed
+  too (3:W, the rest C). The assembled class is the same every round (the
+  twist is fixed), so to agent 4 it is indistinguishable from a relabeling.
+- E9c, with echoes (retell unless no gain): the mixture spreads. Agents 2 and
+  5 also end up mixed (2 gets 3:W, 5 gets 17:C), still with zero fires.
+- E9d, the common-factor ring, same twist: the meeting point compares mod 6
+  and fires once, in round 0; the objection on edge 3–4 shifts H by 1 to
+  363486 ≡ 0 mod 6, and the ring never fires again. After that, C and W agree
+  on every prime anyone holds: the twist is still there mod k, only no longer
+  in any part that is claimed.
+
+So the merge's blind spot (coprime arrivals cannot conflict) is exactly where
+holonomy turns into a mixed class, and the echo carries it. Where the paths
+share a prime, one objection flattens the twist on that prime, at whatever
+edge happened to fire. Detection requires a checker that holds a prime both
+paths carry. This qualifies L28: honest moduli make the twist harmless only
+where something calibrates the edges (E1–E3 had the shared fact z on every
+edge); on the ring nothing does.

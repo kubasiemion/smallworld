@@ -1,0 +1,42 @@
+# E9a: E6c (merge, complement ring, breadth-first from 0) with random gauges.
+# Translations start at 0, so every edge is wrong by exactly the gauge
+# difference: a coboundary, no holonomy around the ring.
+# Expect: no fires; both paths deliver the same value; every agent off by a
+# constant in its own frame (it holds z in the source's frame).
+base = "e6c_merge_complement.toml"
+name = "e9a_ring_gauge_offset"
+[[agents]]
+id = 0
+group = "S"
+resolution = 255255
+gauge = "random"
+[[agents]]
+id = 1
+group = "R"
+resolution = 170170
+gauge = "random"
+[[agents]]
+id = 2
+group = "R"
+resolution = 102102
+gauge = "random"
+[[agents]]
+id = 3
+group = "R"
+resolution = 72930
+gauge = "random"
+[[agents]]
+id = 4
+group = "R"
+resolution = 46410
+gauge = "random"
+[[agents]]
+id = 5
+group = "R"
+resolution = 39270
+gauge = "random"
+[[agents]]
+id = 6
+group = "R"
+resolution = 30030
+gauge = "random"

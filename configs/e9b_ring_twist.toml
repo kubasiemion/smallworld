@@ -1,0 +1,11 @@
+# E9b: as E9a, but each edge starts with a random translation g and its
+# negative the other way: every edge consistent with itself, holonomy H around
+# the ring arbitrary. The meeting point checks at gcd 1, so it cannot see H.
+# Expect: no fires; agent 4 (and, by the echo, others) holds a class that
+# matches the clockwise path on some primes and the counter-clockwise on others.
+base = "e9a_ring_gauge_offset.toml"
+name = "e9b_ring_twist"
+
+[translations]
+init = "random_antisymmetric"
+seed = 7

@@ -1,0 +1,44 @@
+# E9d: the common-factor ring (E6b, every edge shares 6) with random gauges and
+# a random antisymmetric twist. Here the meeting point compares mod 6.
+# Expect: fires whenever H is not 0 mod 6.
+base = "e6b_merge_common_factor.toml"
+name = "e9d_ring6_twist"
+
+[translations]
+init = "random_antisymmetric"
+seed = 7
+[[agents]]
+id = 0
+group = "S"
+resolution = 6
+gauge = "random"
+[[agents]]
+id = 1
+group = "R"
+resolution = 30
+gauge = "random"
+[[agents]]
+id = 2
+group = "R"
+resolution = 42
+gauge = "random"
+[[agents]]
+id = 3
+group = "R"
+resolution = 66
+gauge = "random"
+[[agents]]
+id = 4
+group = "R"
+resolution = 78
+gauge = "random"
+[[agents]]
+id = 5
+group = "R"
+resolution = 102
+gauge = "random"
+[[agents]]
+id = 6
+group = "R"
+resolution = 210
+gauge = "random"
