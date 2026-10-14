@@ -8,7 +8,7 @@ import networkx as nx
 from smallworld.core.agent import Agent
 from smallworld.core.observer import Observer
 from smallworld.core.tape import Tape
-from smallworld.core.types import Check, Estimate, Fire, Objection, Truth
+from smallworld.core.types import Check, Estimate, Fire, Message, Objection, Truth
 
 
 class ZkObserver(Observer):
@@ -52,9 +52,12 @@ class ZkObserver(Observer):
         objections, objection_size = 0, 0
         filled: set[frozenset] = set()
         involved: set[int] = set()
+        messages = 0
         for _, e in tape.events(round):
             if isinstance(e, Truth):
                 truth = e.target
+            elif isinstance(e, Message):
+                messages += 1
             elif isinstance(e, Estimate):
                 estimates.append(e)
             elif isinstance(e, Fire):
@@ -126,6 +129,7 @@ class ZkObserver(Observer):
             "wrong_agree": wrong_agree / max(1, len(pairs)),
             "fires_reading": fires["reading"],
             "fires_path": fires["path"],
+            "messages": messages,
             "objections": objections,
             "objection_size": objection_size / max(1, objections),
             "edge_err_visible": vis,

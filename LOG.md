@@ -274,3 +274,51 @@ meeting point triangulates. Depth-first: one front runs the long way round
 completes the ring under a breadth-first wave barely helps a depth-first one
 (agent 3: 15 → 165). Same graph, same agents, same bridge: the order of
 telling decides what is known.
+
+## 2026-10-14, waves with retelling
+
+**L31. Retelling flood.** `Flood` gains `retell = "always"`: every delivery
+gives dst a turn, unless damped by `stop_on` ("agreement": dst already held
+state and did not object; "no_gain": dst gained nothing). A separate switch,
+`retell_on_objection`, decides whether an objected delivery gives dst a turn
+anyway: the conflict itself spreading, a phenomenon distinct from news
+spreading (named in conversation, not yet articulated before). Limits: `ttl`
+(hops), `max_turns` (per node), `budget` (exchanges per round; 10000 by default
+under "always", so an undamped wave ends). The default, `retell = "first"`,
+is the old flood.
+
+To feed it, an exchange's outcome now flows back to the scheduler
+(`Scheduler.delivered`), as reported by dst itself through `Verdict.gained`.
+The scheduler still never looks inside an agent. Observer gains `messages`
+per round. All earlier runs regenerated: identical apart from that column.
+
+**L32. Echoes can replace the bridge.** MergeAgent on the plain complement
+ring (no chord), queue flood from 0. Claimed modulus per agent 1–6, and
+messages per round:
+
+| run | 1 | 2 | 3 | 4 | 5 | 6 | messages |
+|---|---|---|---|---|---|---|---|
+| ceiling | 85085 | 51051 | 36465 | 23205 | 19635 | 15015 | |
+| E6c, tell once | 85085 | 17017 | 36465 | 23205 | 1155 | 15015 | 8 |
+| E7b, tell once + chord | ceiling | | | | | | 10 |
+| E8a, retell unless no gain | ceiling | | | | | | 12 |
+| E8d, as E8a, ttl 4 | ceiling | | | | | | 10 |
+| E8b, retell unless already knew | 85085 | 17017 | 36465 | 23205 | 1155 | 15015 | 8 |
+| E8c, undamped, budget 60 | ceiling | | | | | | 60 |
+
+The triangulated value at the meeting point travels back out as an echo
+(4→5, 3→2) and completes the ring without any chord: 12 messages, or 10 with a
+hop limit, the same as the bridge. Damping on *agreement* kills exactly that
+echo, because the meeting point "already knew" and agreed: nothing beyond E6c.
+Undamped retelling reaches the same knowledge at five times the cost. So the
+useful damping signal is gain, not agreement; "I already know about it" is the
+wrong stop rule precisely where triangulation happens.
+
+**L33. Objections do not spread in the current agents.** Relay on the ring
+(E8e/f) and on the ring with chord (E8g): `retell_on_objection` changes
+messages by at most 0.9 per round and nothing else. Reason: after an objection
+the relay keeps its first belief, so its retold content is old content that
+its neighbours already hold; and a relay never tells a belief back to its
+supplier. For a conflict to spread, the conflict has to be content: a message
+saying "these disagree", or an agent that adopts or flags the disputed value.
+Neither exists yet. The switch is ready; the agents have nothing to say with it.

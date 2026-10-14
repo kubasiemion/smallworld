@@ -84,6 +84,7 @@ def run(config: dict, out_dir: str | None = None) -> list[dict]:
         last_written = {i: -1 for i in agents}
         last_received = {i: -1 for i in agents}
         for src, dst in scheduler.exchanges(r, edges):
+            gained = objected = False
             for out in agents[src].compose(dst):
                 mseq = tape.append(Message(
                     round=r, src=src, dst=dst, kind=out.kind, value=out.value,
@@ -93,6 +94,8 @@ def run(config: dict, out_dir: str | None = None) -> list[dict]:
                 last_received[dst] = mseq
                 tape.append(Arm(round=r, writer=src, on=mseq))
                 verdict = agents[dst].receive(src, out)
+                gained = gained or verdict.gained
+                objected = objected or (verdict.fired and verdict.object)
                 if verdict.path_other is not None:
                     tape.append(Check(round=r, checker=dst, a=src, b=verdict.path_other, kind=out.kind))
                 if verdict.fired:
@@ -105,6 +108,7 @@ def run(config: dict, out_dir: str | None = None) -> list[dict]:
                         agents[src].apply_objection(dst, sent, as_objector=False)
                 else:
                     tape.append(Expire(round=r, writer=src, on=mseq))
+            scheduler.delivered(src, dst, gained=gained, objected=objected)
 
         for a in agents.values():
             value, modulus = a.estimate()

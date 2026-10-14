@@ -1,0 +1,8 @@
+# E8a: merge, plain complement ring, queue flood from 0, everyone retells after
+# every delivery unless it gained nothing. Can echoes do what the chord did?
+base = "e6c_merge_complement.toml"
+name = "e8a_wave_no_gain"
+
+[scheduler]
+class = "smallworld.impl.schedulers.Flood"
+params = { sources = [0], mode = "queue", retell = "always", stop_on = "no_gain" }

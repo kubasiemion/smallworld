@@ -85,13 +85,14 @@ class MergeAgent(Agent):
         held = self.beliefs.get(out.kind)
         if held is None:
             self.beliefs[out.kind] = (received, n, src)
-            return Verdict(False)
+            return Verdict(False, gained=True)
         a, p, other = held
         common = gcd(p, n)
         compatible = (a - received) % common == 0
         if compatible:
-            self.beliefs[out.kind] = (*crt(a, p, received, n), src)
-            return Verdict(False, path_other=other if other != self.id else None)
+            value, modulus = crt(a, p, received, n)
+            self.beliefs[out.kind] = (value, modulus, src)
+            return Verdict(False, path_other=other if other != self.id else None, gained=modulus > p)
         delta = self.watchdog.check_path(a, received, p, n)
         if delta is None:  # unchecked: default-accept, but nothing to merge
             return Verdict(False)

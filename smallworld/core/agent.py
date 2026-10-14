@@ -24,6 +24,7 @@ class Verdict:
     delta: Optional[int] = None
     path_other: Optional[AgentId] = None  # set when a path check was made
     object: bool = True  # a fire may be logged without sending an objection
+    gained: bool = False  # the receiver learned something it did not hold
 
 
 class Agent(ABC):

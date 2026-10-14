@@ -1,0 +1,8 @@
+# E8e: relay (E5c), retell always, damped on agreement, but objections retell:
+# the conflict at the meeting point spreads. Budget 200 per round.
+base = "e5c_ring_complement.toml"
+name = "e8e_relay_controversy"
+
+[scheduler]
+class = "smallworld.impl.schedulers.Flood"
+params = { sources = [0], mode = "queue", retell = "always", stop_on = "agreement", retell_on_objection = true, budget = 200 }

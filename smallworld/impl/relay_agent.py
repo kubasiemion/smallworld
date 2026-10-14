@@ -68,8 +68,9 @@ class RelayAgent(Agent):
             return Verdict(True, "reading", delta) if delta is not None else Verdict(False)
         held = self.beliefs.get(out.kind)
         if held is None or held[1] == src:
+            changed = held is None or held[0] != received
             self.beliefs[out.kind] = (received, src)
-            return Verdict(False)
+            return Verdict(False, gained=changed)
         delta = self.watchdog.check_path(held[0], received, self.res, out.precision)
         if delta is not None:
             return Verdict(True, "path", delta, path_other=held[1], object=self.path_objections)

@@ -1,0 +1,6 @@
+# E8c: as E8a, undamped; only a budget of 60 exchanges per round stops it.
+base = "e8a_wave_no_gain.toml"
+name = "e8c_wave_undamped"
+
+[scheduler]
+params = { stop_on = "none", budget = 60 }

@@ -1,0 +1,143 @@
+{
+  "name": "e8c_wave_undamped",
+  "seed": 1,
+  "rounds": 200,
+  "k": 510510,
+  "cut": [],
+  "world": {
+    "class": "smallworld.impl.zk_world.UniformZk",
+    "params": {
+      "facts": [
+        "z"
+      ]
+    }
+  },
+  "disclosure": {
+    "class": "smallworld.impl.split_disclosure.GroupDisclosure",
+    "params": {
+      "groups": {
+        "S": [
+          "z"
+        ],
+        "R": []
+      }
+    }
+  },
+  "task": {
+    "class": "smallworld.impl.identity_task.Identity",
+    "params": {
+      "a": "z"
+    }
+  },
+  "factor": {
+    "class": "smallworld.impl.resolution_factor.ResolutionFactor"
+  },
+  "agent": {
+    "class": "smallworld.impl.merge_agent.MergeAgent"
+  },
+  "watchdog": {
+    "class": "smallworld.impl.default_watchdog.DefaultWatchdog",
+    "params": {
+      "intensity": 1.0,
+      "horizon": 1
+    }
+  },
+  "repair": {
+    "class": "smallworld.impl.repairs.NamedRepair"
+  },
+  "topology": {
+    "class": "smallworld.impl.topologies.Groups",
+    "params": {
+      "dense": false,
+      "extra": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          4,
+          5
+        ],
+        [
+          5,
+          6
+        ],
+        [
+          0,
+          6
+        ]
+      ]
+    }
+  },
+  "scheduler": {
+    "class": "smallworld.impl.schedulers.Flood",
+    "params": {
+      "sources": [
+        0
+      ],
+      "mode": "queue",
+      "retell": "always",
+      "stop_on": "none",
+      "budget": 60
+    }
+  },
+  "observer": {
+    "class": "smallworld.impl.zk_observer.ZkObserver"
+  },
+  "agents": [
+    {
+      "id": 0,
+      "group": "S",
+      "resolution": 255255,
+      "gauge": 0
+    },
+    {
+      "id": 1,
+      "group": "R",
+      "resolution": 170170,
+      "gauge": 0
+    },
+    {
+      "id": 2,
+      "group": "R",
+      "resolution": 102102,
+      "gauge": 0
+    },
+    {
+      "id": 3,
+      "group": "R",
+      "resolution": 72930,
+      "gauge": 0
+    },
+    {
+      "id": 4,
+      "group": "R",
+      "resolution": 46410,
+      "gauge": 0
+    },
+    {
+      "id": 5,
+      "group": "R",
+      "resolution": 39270,
+      "gauge": 0
+    },
+    {
+      "id": 6,
+      "group": "R",
+      "resolution": 30030,
+      "gauge": 0
+    }
+  ]
+}

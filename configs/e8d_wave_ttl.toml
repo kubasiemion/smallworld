@@ -1,0 +1,6 @@
+# E8d: as E8a with a hop limit of 4 (heard it fourth-hand at most).
+base = "e8a_wave_no_gain.toml"
+name = "e8d_wave_ttl"
+
+[scheduler]
+params = { ttl = 4 }

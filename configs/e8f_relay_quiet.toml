@@ -1,0 +1,6 @@
+# E8f: as E8e, but objections do not retell.
+base = "e8e_relay_controversy.toml"
+name = "e8f_relay_quiet"
+
+[scheduler]
+params = { retell_on_objection = false }
