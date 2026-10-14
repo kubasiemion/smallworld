@@ -1,0 +1,9 @@
+# E10b: as E10a, with a random antisymmetric twist in the translations.
+# Expect: disputes where the three facts meet on a prime someone holds for all
+# three; silently wrong facts where they do not.
+base = "e10a_law_ring.toml"
+name = "e10b_law_ring_twist"
+
+[translations]
+init = "random_antisymmetric"
+seed = 7

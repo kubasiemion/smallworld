@@ -1,0 +1,62 @@
+# E10a: a law of nature, z = x - y, on the complement ring (DESIGN A2).
+# Three sources: agent 0 sees x, agent 2 sees y, agent 5 sees z; the rest
+# see nothing. Every agent holds the law and never revises it: it derives the
+# third fact where it knows two, and where it knows all three and they
+# violate the law it suspends judgment on that prime and sends a bare Dispute
+# to its suppliers. Gauges 0; translations start correct.
+# Expect: no disputes; derivation spreads knowledge of all three facts.
+base = "e5c_ring_complement.toml"
+name = "e10a_law_ring"
+default_gauge = 0
+
+[world]
+class = "smallworld.impl.law_world.LawWorld"
+params = { a = "x", b = "y", c = "z" }
+
+[disclosure]
+class = "smallworld.impl.split_disclosure.GroupDisclosure"
+params = { groups = { SX = ["x"], SY = ["y"], SZ = ["z"], R = [] } }
+
+[task]
+class = "smallworld.impl.identity_task.Identity"
+params = { a = "z" }
+
+[agent]
+class = "smallworld.impl.law_agent.LawAgent"
+params = { law = { a = "x", b = "y", c = "z" } }
+
+[scheduler]
+class = "smallworld.impl.schedulers.Flood"
+params = { sources = [0, 2, 5], mode = "queue", retell = "always", stop_on = "no_gain" }
+
+[observer]
+class = "smallworld.impl.law_observer.LawObserver"
+
+[[agents]]
+id = 0
+group = "SX"
+resolution = 255255
+[[agents]]
+id = 1
+group = "R"
+resolution = 170170
+[[agents]]
+id = 2
+group = "SY"
+resolution = 102102
+[[agents]]
+id = 3
+group = "R"
+resolution = 72930
+[[agents]]
+id = 4
+group = "R"
+resolution = 46410
+[[agents]]
+id = 5
+group = "SZ"
+resolution = 39270
+[[agents]]
+id = 6
+group = "R"
+resolution = 30030

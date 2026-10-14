@@ -1,0 +1,158 @@
+{
+  "name": "e10b_law_ring_twist",
+  "seed": 1,
+  "rounds": 200,
+  "k": 510510,
+  "cut": [],
+  "world": {
+    "class": "smallworld.impl.law_world.LawWorld",
+    "params": {
+      "a": "x",
+      "b": "y",
+      "c": "z"
+    }
+  },
+  "disclosure": {
+    "class": "smallworld.impl.split_disclosure.GroupDisclosure",
+    "params": {
+      "groups": {
+        "S": [
+          "z"
+        ],
+        "R": [],
+        "SX": [
+          "x"
+        ],
+        "SY": [
+          "y"
+        ],
+        "SZ": [
+          "z"
+        ]
+      }
+    }
+  },
+  "task": {
+    "class": "smallworld.impl.identity_task.Identity",
+    "params": {
+      "a": "z"
+    }
+  },
+  "factor": {
+    "class": "smallworld.impl.resolution_factor.ResolutionFactor"
+  },
+  "agent": {
+    "class": "smallworld.impl.law_agent.LawAgent",
+    "params": {
+      "law": {
+        "a": "x",
+        "b": "y",
+        "c": "z"
+      }
+    }
+  },
+  "watchdog": {
+    "class": "smallworld.impl.default_watchdog.DefaultWatchdog",
+    "params": {
+      "intensity": 1.0,
+      "horizon": 1
+    }
+  },
+  "repair": {
+    "class": "smallworld.impl.repairs.NamedRepair"
+  },
+  "topology": {
+    "class": "smallworld.impl.topologies.Groups",
+    "params": {
+      "dense": false,
+      "extra": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          4,
+          5
+        ],
+        [
+          5,
+          6
+        ],
+        [
+          0,
+          6
+        ]
+      ]
+    }
+  },
+  "scheduler": {
+    "class": "smallworld.impl.schedulers.Flood",
+    "params": {
+      "sources": [
+        0,
+        2,
+        5
+      ],
+      "mode": "queue",
+      "retell": "always",
+      "stop_on": "no_gain"
+    }
+  },
+  "observer": {
+    "class": "smallworld.impl.law_observer.LawObserver"
+  },
+  "agents": [
+    {
+      "id": 0,
+      "group": "SX",
+      "resolution": 255255
+    },
+    {
+      "id": 1,
+      "group": "R",
+      "resolution": 170170
+    },
+    {
+      "id": 2,
+      "group": "SY",
+      "resolution": 102102
+    },
+    {
+      "id": 3,
+      "group": "R",
+      "resolution": 72930
+    },
+    {
+      "id": 4,
+      "group": "R",
+      "resolution": 46410
+    },
+    {
+      "id": 5,
+      "group": "SZ",
+      "resolution": 39270
+    },
+    {
+      "id": 6,
+      "group": "R",
+      "resolution": 30030
+    }
+  ],
+  "default_gauge": 0,
+  "translations": {
+    "init": "random_antisymmetric",
+    "seed": 7
+  }
+}

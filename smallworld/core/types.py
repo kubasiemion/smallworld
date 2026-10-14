@@ -102,6 +102,18 @@ class Objection(Event):
 
 
 @dataclass(frozen=True)
+class Dispute(Event):
+    """A bare report that a held law fails: `src` (the dissident) tells `dst`,
+    one of its suppliers, that the facts it was given violate the law mod
+    `prime`. It says that, not where: not which fact, not which edge."""
+
+    src: AgentId = -1
+    dst: AgentId = -1
+    prime: int = 0
+    on: int = -1  # seq of the Message whose arrival exposed the violation
+
+
+@dataclass(frozen=True)
 class Expire(Event):
     """A watchdog's horizon passed without firing."""
 

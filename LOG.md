@@ -379,3 +379,44 @@ as simply its own value). One g per sender treats both as "the sender's
 frame", so each hop adds its edge error to an unlabelled sum. Honest moduli
 (MergeAgent) make messages honest about how much is known, not about whose
 frame the value is really in. This is the mechanism under L35.
+
+## 2026-10-14, a law of nature
+
+**L37. Implementation of DESIGN A2, without touching earlier runs.** New:
+`LawWorld`, `LawAgent`, `LawObserver`, event `Dispute`; optional hooks
+`Verdict.disputes`, `Agent.receive_dispute`, `Agent.held`, `default_gauge`.
+Every earlier config rerun: zero changed results. Two choices made while
+building, both recorded in the agent's docstring:
+
+- A suspended prime stays suspended for the rest of the round, so suspension
+  cannot oscillate with retelling (the closure is monotone).
+- The first version let a contradiction between an arrival and a *derived*
+  residue reach the merge, which treated it as an ordinary path conflict and
+  objected on the arrival's edge (a located, named repair). The law never
+  got to speak: 0 disputes, 224 path fires per round settling to 13. Fixed:
+  contradicting a derived residue is a law violation, handled as such.
+
+**L38. E10a: no twist, the law gives everyone everything.** Complement ring,
+three sources (0 sees x, 2 sees y, 5 sees z), queue flood with retelling
+unless no gain, 70 messages per round. Knowledge = 1.00: every agent holds
+every fact at its full resolution, and every fact is right. Each source
+misses one prime of its own fact, and each prime is missing from at most one
+source, so the law always supplies the missing third.
+
+**L39. E10b: with a twist, those who look dissent and those who listen agree.**
+Same, random antisymmetric translations. Steady from round 0:
+
+- Dissidents are agents 0, 2, 5 (the three sources) and 3. A source trusts its
+  reading, so the law, applied to the twisted values it receives, fails
+  against it on every prime; it suspends both other facts entirely and holds
+  only what it saw. 27 disputes per round, all ignored.
+- Agents 1, 4, 6, who observe nothing, hold all three facts, each consistent
+  with the law and each wrong (9 silently wrong facts): a coherent wrong world.
+  Agent 3 is between (x right mod 3, y and z wrong).
+- Fact correctness 0.27; coverage 0.71; knowledge 0.51.
+
+The law cannot fail inside a web that contains no observation: three wrong
+numbers derived from each other satisfy it. It fails only where it meets
+something seen. So under a twist the observers are the dissidents, and the
+orthodoxy is held by those who only listen. Disputes now exist as content,
+addressed and logged; nothing yet acts on them. That is the next decision.

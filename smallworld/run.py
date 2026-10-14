@@ -14,7 +14,7 @@ import random
 import tomllib
 
 from smallworld.core.tape import Tape
-from smallworld.core.types import Arm, Check, Estimate, Expire, Fire, Message, Objection, Setup, Truth
+from smallworld.core.types import Arm, Check, Dispute, Estimate, Expire, Fire, Message, Objection, Setup, Truth
 
 
 def load_class(path: str):
@@ -57,7 +57,7 @@ def run(config: dict, out_dir: str | None = None) -> list[dict]:
 
     agents = {}
     for a in specs:
-        gauge = a.get("gauge", "random")
+        gauge = a.get("gauge", config.get("default_gauge", "random"))
         gauge = rng.randrange(k) if gauge == "random" else int(gauge)
         factor = build(config["factor"], rng, k=k, resolution=a["resolution"], gauge=gauge)
         agent_spec = {"class": a.get("class", config["agent"]["class"]),
@@ -116,6 +116,9 @@ def run(config: dict, out_dir: str | None = None) -> list[dict]:
                 verdict = agents[dst].receive(src, out)
                 gained = gained or verdict.gained
                 objected = objected or (verdict.fired and verdict.object)
+                for target, prime in verdict.disputes:
+                    tape.append(Dispute(round=r, src=dst, dst=target, prime=prime, on=mseq))
+                    agents[target].receive_dispute(dst, prime)
                 if verdict.path_other is not None:
                     tape.append(Check(round=r, checker=dst, a=src, b=verdict.path_other, kind=out.kind))
                 if verdict.fired:

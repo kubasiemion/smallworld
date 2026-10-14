@@ -151,3 +151,17 @@ apart from here on:
   `Correction` are reserved event names.
 
 `RepairPolicy` stays the name of the update rule for both. See LOG L20.
+
+**A2 (2026-10-14), a law and its dissidents.** Facts x, y, z with z = x − y
+true in the world (`LawWorld`). Every `LawAgent` (a MergeAgent) holds the law
+and never revises it. After each arrival it applies the law per prime power q
+of its resolution: two facts known mod q derive the third; all three known and
+inconsistent, or an arrival contradicting a derived residue, is a violation.
+On a violation the agent suspends judgment (drops q from every non-own fact of
+the law, for the rest of the round) and sends a bare `Dispute` (that, not
+where) to everyone who contributed to those facts this round. Own readings are
+never suspended. Receivers log disputes and do nothing else (first run). The
+law is frame-bound, so these runs use gauge 0 (`default_gauge`); errors live
+in the initial translations. New optional hooks, all defaulting to the old
+behaviour: `Verdict.disputes`, `Agent.receive_dispute`, `Agent.held`, config
+key `default_gauge`. `LawObserver` adds per-fact measures.

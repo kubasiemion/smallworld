@@ -25,6 +25,7 @@ class Verdict:
     path_other: Optional[AgentId] = None  # set when a path check was made
     object: bool = True  # a fire may be logged without sending an objection
     gained: bool = False  # the receiver learned something it did not hold
+    disputes: tuple = ()  # (supplier, prime) pairs to send Dispute reports to
 
 
 class Agent(ABC):
@@ -59,6 +60,15 @@ class Agent(ABC):
     @abstractmethod
     def estimate(self) -> tuple[Optional[int], int]:
         """Task estimate in this agent's ℤ_resolution, or None if not computable."""
+
+    def receive_dispute(self, src: AgentId, prime: int) -> None:
+        """A neighbour reports that facts this agent supplied violate a law.
+        Default: ignored."""
+
+    def held(self) -> dict:
+        """For the Observer only: {fact: (value, modulus)} as currently held.
+        Default: nothing reported."""
+        return {}
 
     def set_translation(self, peer: AgentId, value: int) -> None:
         """Initial conditions only: the runner sets a starting translation
