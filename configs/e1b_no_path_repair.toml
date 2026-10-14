@@ -1,7 +1,7 @@
-# E1b: as E1, but path-check fires are logged without repair.
-# Isolates misattributed repair (a path conflict moving g) from the twist itself.
+# E1b: as E1, but path-check fires are logged without an objection.
+# Isolates misattributed objection (a path conflict moving g) from the twist itself.
 base = "e1.toml"
 name = "e1b_no_path_repair"
 
 [agent]
-params = { path_repairs = false }
+params = { path_objections = false }

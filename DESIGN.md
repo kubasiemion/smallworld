@@ -133,3 +133,21 @@ tests/     E0 as a test
 ```
 
 Python 3, standard library plus networkx for cycle bases.
+
+---
+
+## Amendments
+
+**A1 (2026-10-14), terminology.** Repair has two directions, and they are kept
+apart from here on:
+
+- **Objection**: listener-initiated. The receiver of a message objects to it
+  because it contradicts the receiver's own reading or a held belief. This is
+  what §3's "Fire, then Repair back to src" describes, and the only repair
+  implemented so far. Event `Objection`; agent method `apply_objection`.
+- **Correction**: writer-initiated, the protocol's own repair. Message →
+  continuation (the listener's paraphrase or derived value) → the writer's
+  watchdog fires → correction. Not yet implemented; `Continuation` and
+  `Correction` are reserved event names.
+
+`RepairPolicy` stays the name of the update rule for both. See LOG L20.

@@ -23,7 +23,7 @@ class Verdict:
     cause: str = ""
     delta: Optional[int] = None
     path_other: Optional[AgentId] = None  # set when a path check was made
-    repair: bool = True  # a fire may be logged without sending a repair
+    object: bool = True  # a fire may be logged without sending an objection
 
 
 class Agent(ABC):
@@ -51,8 +51,9 @@ class Agent(ABC):
         """Translate, continue, and run the watchdog."""
 
     @abstractmethod
-    def corrected(self, peer: AgentId, sent: Optional[int], as_checker: bool) -> None:
-        """Apply a repair on the edge to `peer`."""
+    def apply_objection(self, peer: AgentId, sent: Optional[int], as_objector: bool) -> None:
+        """Update the translation for `peer` after an objection on that edge,
+        either as the objecting listener or as the writer objected to."""
 
     @abstractmethod
     def estimate(self) -> tuple[Optional[int], int]:

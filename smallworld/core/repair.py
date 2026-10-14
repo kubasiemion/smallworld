@@ -5,7 +5,11 @@ from typing import Optional
 
 
 class RepairPolicy(ABC):
-    """What a fired watchdog sends, and how each side updates its translation."""
+    """What a repair carries, and how each side updates its translation.
+
+    Currently applied to Objections only (listener-initiated). Corrections
+    from the original writer will use the same policy.
+    """
 
     @abstractmethod
     def message(self, delta: int) -> Optional[int]:
@@ -13,8 +17,8 @@ class RepairPolicy(ABC):
 
     @abstractmethod
     def update_receiver(self, g: int, sent: Optional[int], k: int) -> int:
-        """New translation held by the checker for messages from the corrected peer."""
+        """New translation held by the objector for messages from the writer."""
 
     @abstractmethod
     def update_sender(self, g: int, sent: Optional[int], k: int) -> int:
-        """New translation held by the corrected peer for messages from the checker."""
+        """New translation held by the writer for messages from the objector."""

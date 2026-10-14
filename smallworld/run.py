@@ -14,7 +14,7 @@ import random
 import tomllib
 
 from smallworld.core.tape import Tape
-from smallworld.core.types import Arm, Check, Estimate, Expire, Fire, Message, Repair, Truth
+from smallworld.core.types import Arm, Check, Estimate, Expire, Fire, Message, Objection, Truth
 
 
 def load_class(path: str):
@@ -98,11 +98,11 @@ def run(config: dict, out_dir: str | None = None) -> list[dict]:
                 if verdict.fired:
                     fseq = tape.append(Fire(round=r, checker=dst, src=src, kind=out.kind,
                                             cause=verdict.cause, delta=verdict.delta, on=mseq))
-                    if verdict.repair:
+                    if verdict.object:
                         sent = runner_repair.message(verdict.delta)
-                        tape.append(Repair(round=r, src=dst, dst=src, delta=sent, on=fseq))
-                        agents[dst].corrected(src, sent, as_checker=True)
-                        agents[src].corrected(dst, sent, as_checker=False)
+                        tape.append(Objection(round=r, src=dst, dst=src, delta=sent, on=fseq))
+                        agents[dst].apply_objection(src, sent, as_objector=True)
+                        agents[src].apply_objection(dst, sent, as_objector=False)
                 else:
                     tape.append(Expire(round=r, writer=src, on=mseq))
 

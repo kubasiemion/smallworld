@@ -51,7 +51,7 @@
   "agent": {
     "class": "smallworld.impl.relay_agent.RelayAgent",
     "params": {
-      "path_repairs": false
+      "path_objections": false
     }
   },
   "watchdog": {

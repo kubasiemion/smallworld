@@ -110,3 +110,17 @@ separate them. The control is beliefs that carry their modulus. If errors
 vanish under it, the twist in this model is an artefact of overconfidence; if
 they persist, it is cohomological. This decides whether the stop rule's second
 clause has been met.
+
+**L20. Terminology repair: Objection vs Correction** (DESIGN A1). What the code
+called `Repair` comes from the listener and goes back to the writer. In the
+protocol, a repair comes from the original source after the listener's
+continuation: message → continuation → correction. The implemented event is
+renamed `Objection`; `Correction` and `Continuation` are reserved for the
+writer-side protocol. Renamed alongside: `Agent.corrected` →
+`apply_objection`, `Verdict.repair` → `object`, agent param `path_repairs` →
+`path_objections`, measures `repairs`/`repair_size` →
+`objections`/`objection_size`. All runs regenerated; only CSV headers
+changed, values identical.
+
+Consequence for reading L14–L18: every "repair" there is an objection. The
+writer-side protocol has not been run at all.

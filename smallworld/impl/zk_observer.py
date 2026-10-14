@@ -8,7 +8,7 @@ import networkx as nx
 from smallworld.core.agent import Agent
 from smallworld.core.observer import Observer
 from smallworld.core.tape import Tape
-from smallworld.core.types import Check, Estimate, Fire, Repair, Truth
+from smallworld.core.types import Check, Estimate, Fire, Objection, Truth
 
 
 class ZkObserver(Observer):
@@ -49,7 +49,7 @@ class ZkObserver(Observer):
         truth = None
         estimates: list[Estimate] = []
         fires = {"reading": 0, "path": 0}
-        repairs, repair_size = 0, 0
+        objections, objection_size = 0, 0
         filled: set[frozenset] = set()
         involved: set[int] = set()
         for _, e in tape.events(round):
@@ -60,10 +60,10 @@ class ZkObserver(Observer):
             elif isinstance(e, Fire):
                 fires[e.cause] += 1
                 involved.update((e.checker, e.src))
-            elif isinstance(e, Repair):
-                repairs += 1
+            elif isinstance(e, Objection):
+                objections += 1
                 if e.delta is not None:
-                    repair_size += min(e.delta, self.k - e.delta)
+                    objection_size += min(e.delta, self.k - e.delta)
             elif isinstance(e, Check):
                 filled.add(frozenset((e.checker, e.a, e.b)))
 
@@ -126,8 +126,8 @@ class ZkObserver(Observer):
             "wrong_agree": wrong_agree / max(1, len(pairs)),
             "fires_reading": fires["reading"],
             "fires_path": fires["path"],
-            "repairs": repairs,
-            "repair_size": repair_size / max(1, repairs),
+            "objections": objections,
+            "objection_size": objection_size / max(1, objections),
             "edge_err_visible": vis,
             "edge_err_invisible": invis,
             "cut_edge_err": cut_err,

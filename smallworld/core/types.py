@@ -75,11 +75,18 @@ class Check(Event):
 
 
 @dataclass(frozen=True)
-class Repair(Event):
-    """Correction sent back along the edge. `delta` is None for a bare repair."""
+class Objection(Event):
+    """Listener-initiated repair: the receiver of a message objects to it,
+    because it contradicts the receiver's own reading or a held belief.
+    `delta` is None for a bare objection.
 
-    src: AgentId = -1  # who repairs
-    dst: AgentId = -1  # who is corrected
+    Not to be confused with a Correction (not yet implemented), which comes
+    from the original writer after seeing the listener's continuation:
+    message -> continuation -> correction.
+    """
+
+    src: AgentId = -1  # the objecting listener
+    dst: AgentId = -1  # the writer objected to
     delta: Optional[int] = None
     on: int = -1  # seq of the Fire
 

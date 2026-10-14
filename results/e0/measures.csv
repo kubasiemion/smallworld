@@ -1,4 +1,4 @@
-round,coverage,correct,correct_chance,silent_wrong,agree,wrong_agree,fires_reading,fires_path,repairs,repair_size,edge_err_visible,edge_err_invisible,cut_edge_err,holonomy_cut_cycles,holonomy_inner_cycles,holonomy_invisible,cycles,holonomy_tri_filled,holonomy_tri_unfilled,triangles_filled,triangles
+round,coverage,correct,correct_chance,silent_wrong,agree,wrong_agree,fires_reading,fires_path,objections,objection_size,edge_err_visible,edge_err_invisible,cut_edge_err,holonomy_cut_cycles,holonomy_inner_cycles,holonomy_invisible,cycles,holonomy_tri_filled,holonomy_tri_unfilled,triangles_filled,triangles
 0,1.0,0.6666666666666666,0.08333333333333333,0.0,0.4666666666666667,0.06666666666666667,17,6,23,2.5217391304347827,4,0,0,0,2,0,3,2,0,2,2
 1,1.0,1.0,0.08333333333333333,0.0,1.0,0.0,2,0,2,2.5,0,0,0,0,0,0,3,0,0,2,2
 2,1.0,1.0,0.08333333333333333,0.0,1.0,0.0,0,0,0,0.0,0,0,0,0,0,0,3,0,0,2,2

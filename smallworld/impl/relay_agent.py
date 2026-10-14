@@ -29,12 +29,12 @@ class RelayAgent(Agent):
         k: int,
         neighbours: list[AgentId],
         initial_translation: int = 0,
-        path_repairs: bool = True,
+        path_objections: bool = True,
     ) -> None:
-        """`path_repairs`: whether a path-check fire sends a repair. The agent
+        """`path_objections`: whether a path-check fire sends an objection. The agent
         cannot tell a translation error from a precision loss upstream, so a
         path repair may move the wrong variable."""
-        self.path_repairs = path_repairs
+        self.path_objections = path_objections
         self.id = id
         self.group = group
         self.factor = factor
@@ -72,11 +72,11 @@ class RelayAgent(Agent):
             return Verdict(False)
         delta = self.watchdog.check_path(held[0], received, self.res, out.precision)
         if delta is not None:
-            return Verdict(True, "path", delta, path_other=held[1], repair=self.path_repairs)
+            return Verdict(True, "path", delta, path_other=held[1], object=self.path_objections)
         return Verdict(False, path_other=held[1])
 
-    def corrected(self, peer: AgentId, sent: Optional[int], as_checker: bool) -> None:
-        if as_checker:
+    def apply_objection(self, peer: AgentId, sent: Optional[int], as_objector: bool) -> None:
+        if as_objector:
             self.g[peer] = self.repair.update_receiver(self.g[peer], sent, self.k)
         else:
             self.g[peer] = self.repair.update_sender(self.g[peer], sent, self.k)
