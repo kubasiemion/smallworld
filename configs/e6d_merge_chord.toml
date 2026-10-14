@@ -1,0 +1,7 @@
+# E6D_MERGE_CHORD: as E5D_RING_CHORD, with MergeAgent: beliefs carry their modulus and
+# redundant arrivals are combined by CRT (LOG L25).
+base = "e5d_ring_chord.toml"
+name = "e6d_merge_chord"
+
+[agent]
+class = "smallworld.impl.merge_agent.MergeAgent"

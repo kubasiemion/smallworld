@@ -1,0 +1,7 @@
+# E6C_MERGE_COMPLEMENT: as E5C_RING_COMPLEMENT, with MergeAgent: beliefs carry their modulus and
+# redundant arrivals are combined by CRT (LOG L25).
+base = "e5c_ring_complement.toml"
+name = "e6c_merge_complement"
+
+[agent]
+class = "smallworld.impl.merge_agent.MergeAgent"

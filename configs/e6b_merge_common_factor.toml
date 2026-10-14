@@ -1,0 +1,7 @@
+# E6B_MERGE_COMMON_FACTOR: as E5B_RING_COMMON_FACTOR, with MergeAgent: beliefs carry their modulus and
+# redundant arrivals are combined by CRT (LOG L25).
+base = "e5b_ring_common_factor.toml"
+name = "e6b_merge_common_factor"
+
+[agent]
+class = "smallworld.impl.merge_agent.MergeAgent"

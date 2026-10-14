@@ -187,3 +187,56 @@ errors 3.6 (was 1.9), cycles with holonomy 2 (was 1). More paths with
 different missing primes means more conflicts, and the agent has nothing to
 do with them but misattribute them. A relay cannot gain from redundancy;
 combining beliefs (gcd/CRT-style) would be a different Agent.
+
+## 2026-10-14, merge
+
+**L25. MergeAgent** (`impl/merge_agent.py`). Beliefs are congruence classes
+with an honest modulus. An arrival (w mod n), translated, becomes a class mod
+gcd(n, m); it is merged with what is held by CRT when the two agree on their
+common modulus (giving the lcm), and fires only when they disagree there,
+which is then a real conflict, not precision loss. Messages carry the true
+modulus as `precision`, so nothing is laundered. This is the L19 control and
+the merge suggested after E5. Configs `e6*` are earlier configs with the agent
+class swapped.
+
+**L26. E6a–d: the ring under merge.** No fires anywhere. Coprime ring (E6a):
+only the source has an estimate; the others honestly hold nothing. Common
+factor (E6b): everyone holds z mod 6, right every round. Complement ring
+(E6c): the meeting point triangulates as predicted, agent 4 at 23205 (relay:
+105, a 221-fold gain) and agent 3, getting it back, at 36465 (relay: 2431).
+Every estimate right at its claimed modulus. The conflict that churned in E5c
+was the information.
+
+**L27. One bridge completes the ring.** E6d adds the chord 2–5. Agents 2 and 5
+go from 17017 and 1155 to 51051 and 19635, and now every agent holds exactly
+gcd(m_j, m_0), the most it can know about the source's reading. Under the
+relay (E5d) the same chord only added a second churn site. Same edge, opposite
+effect, decided by whether arrivals are merged or checked.
+
+**L28. L19 answered: the twist is real and harmless; overconfidence is what
+makes it wrong.** E1, E1b, E2, E3 rerun with MergeAgent:
+
+| | relay correct | merge correct | merge silent wrong | merge fires (r100+) | merge invisible edge err | merge holonomy (cut / inner) |
+|---|---|---|---|---|---|---|
+| E1 | 0.39 | 1.00 | 0 | 0 | 10 | 0 / 1 |
+| E2 | 0.44 | 1.00 | 0 | 0 | 14 | 2 / 2 |
+| E3 | 0.34 | 1.00 | 0 | 0 | 12 | 1 / 3 |
+
+Holonomy persists, at the same level as under the relay, but no estimate is
+ever wrong, because every translation error is a multiple of what the two
+ends can jointly resolve and honest classes are reduced to exactly that. The
+H¹ class lives entirely in the part nobody claims to know. Cost: coverage
+falls to 0.67 in E1/E2 (agents behind gcd-1 edges honestly hold nothing).
+E3 reverses L17: with honest moduli the hub raises coverage to 1.0. A hub that
+does not launder precision is a gauge after all.
+
+Together with L23 (E5c), overconfidence does two things: it *activates* a
+twist that is otherwise harmless (L28), and, through objections to precision
+conflicts, it *manufactures* twist where there was none (L23).
+
+**Bearing on MISSION's stop rule.** The second clause asks whether
+heterogeneity of resolution produces silent wrong agreement on cut-crossing
+cycles. Under honest moduli it does not, at all. Under overconfident lifting
+it does. So heterogeneity alone is not sufficient; heterogeneity plus
+overconfidence is. Whether that meets or triggers the stop rule is a call for
+the next entry, not this one.

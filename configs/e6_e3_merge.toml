@@ -1,0 +1,6 @@
+# e6_e3_merge: as e3, with MergeAgent (honest moduli, CRT merge). The L19 control.
+base = "e3.toml"
+name = "e6_e3_merge"
+
+[agent]
+class = "smallworld.impl.merge_agent.MergeAgent"

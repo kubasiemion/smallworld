@@ -1,0 +1,6 @@
+# e6_e1b_merge: as e1b_no_path_repair, with MergeAgent (honest moduli, CRT merge). The L19 control.
+base = "e1b_no_path_repair.toml"
+name = "e6_e1b_merge"
+
+[agent]
+class = "smallworld.impl.merge_agent.MergeAgent"

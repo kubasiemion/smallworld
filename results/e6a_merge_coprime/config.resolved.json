@@ -1,0 +1,170 @@
+{
+  "name": "e6a_merge_coprime",
+  "seed": 1,
+  "rounds": 200,
+  "k": 510510,
+  "cut": [],
+  "world": {
+    "class": "smallworld.impl.zk_world.UniformZk",
+    "params": {
+      "facts": [
+        "z"
+      ]
+    }
+  },
+  "disclosure": {
+    "class": "smallworld.impl.split_disclosure.GroupDisclosure",
+    "params": {
+      "groups": {
+        "S": [
+          "z"
+        ],
+        "R": []
+      }
+    }
+  },
+  "task": {
+    "class": "smallworld.impl.identity_task.Identity",
+    "params": {
+      "a": "z"
+    }
+  },
+  "factor": {
+    "class": "smallworld.impl.resolution_factor.ResolutionFactor"
+  },
+  "agent": {
+    "class": "smallworld.impl.merge_agent.MergeAgent"
+  },
+  "watchdog": {
+    "class": "smallworld.impl.default_watchdog.DefaultWatchdog",
+    "params": {
+      "intensity": 1.0,
+      "horizon": 1
+    }
+  },
+  "repair": {
+    "class": "smallworld.impl.repairs.NamedRepair"
+  },
+  "topology": {
+    "class": "smallworld.impl.topologies.Groups",
+    "params": {
+      "dense": false,
+      "extra": [
+        [
+          0,
+          1
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          4,
+          5
+        ],
+        [
+          5,
+          6
+        ],
+        [
+          0,
+          6
+        ]
+      ]
+    }
+  },
+  "scheduler": {
+    "class": "smallworld.impl.schedulers.Fixed",
+    "params": {
+      "order": [
+        [
+          0,
+          1
+        ],
+        [
+          0,
+          6
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          6,
+          5
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          5,
+          4
+        ],
+        [
+          3,
+          4
+        ],
+        [
+          4,
+          3
+        ]
+      ]
+    }
+  },
+  "observer": {
+    "class": "smallworld.impl.zk_observer.ZkObserver"
+  },
+  "agents": [
+    {
+      "id": 0,
+      "group": "S",
+      "resolution": 2,
+      "gauge": 0
+    },
+    {
+      "id": 1,
+      "group": "R",
+      "resolution": 3,
+      "gauge": 0
+    },
+    {
+      "id": 2,
+      "group": "R",
+      "resolution": 5,
+      "gauge": 0
+    },
+    {
+      "id": 3,
+      "group": "R",
+      "resolution": 7,
+      "gauge": 0
+    },
+    {
+      "id": 4,
+      "group": "R",
+      "resolution": 11,
+      "gauge": 0
+    },
+    {
+      "id": 5,
+      "group": "R",
+      "resolution": 13,
+      "gauge": 0
+    },
+    {
+      "id": 6,
+      "group": "R",
+      "resolution": 17,
+      "gauge": 0
+    }
+  ]
+}

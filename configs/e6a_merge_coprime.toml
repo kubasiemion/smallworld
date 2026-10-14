@@ -1,0 +1,7 @@
+# E6A_MERGE_COPRIME: as E5A_RING_COPRIME, with MergeAgent: beliefs carry their modulus and
+# redundant arrivals are combined by CRT (LOG L25).
+base = "e5a_ring_coprime.toml"
+name = "e6a_merge_coprime"
+
+[agent]
+class = "smallworld.impl.merge_agent.MergeAgent"
