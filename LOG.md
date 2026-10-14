@@ -124,3 +124,16 @@ changed, values identical.
 
 Consequence for reading L14–L18: every "repair" there is an objection. The
 writer-side protocol has not been run at all.
+
+**L21. Open: repairs are symmetric, real ones are not.** With named
+objections the objector does g += δ and the writer g −= δ, so g_ij + g_ji ≡ 0
+for ever: every edge is antisymmetric by construction, which is HodgeRank's
+assumption and the one we meant to break. Only E4 (bare: independent
+re-guesses) is asymmetric, and nobody measured it. Real asymmetry needs
+per-side state, not just a different update formula: the corrected party
+must guess *where* the correction lands, uptake can fail, residue sits on
+one side. Quine's point applies: a recalcitrant verdict underdetermines
+which belief to revise, and weights (entrenchment) decide. So an asymmetric
+policy is a weighted distribution of δ over the corrected party's adjustable
+state, not a sign flip. First step when we get there: an antisymmetry-defect
+measure e_ij + e_ji in the Observer.
