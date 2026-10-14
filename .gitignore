@@ -1,3 +1,4 @@
 results/*/tape.jsonl
 __pycache__/
 *.pyc
+.venv/
