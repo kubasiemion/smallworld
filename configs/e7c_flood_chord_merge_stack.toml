@@ -1,0 +1,6 @@
+# E7c: as E7b, depth-first (stack). One front runs ahead before the other moves.
+base = "e7b_flood_chord_merge.toml"
+name = "e7c_flood_chord_merge_stack"
+
+[scheduler]
+params = { mode = "stack" }

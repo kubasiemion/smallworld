@@ -1,0 +1,7 @@
+# E7b: E6d (merge, chord 2-5) with a breadth-first Flood from agent 0.
+base = "e6d_merge_chord.toml"
+name = "e7b_flood_chord_merge"
+
+[scheduler]
+class = "smallworld.impl.schedulers.Flood"
+params = { sources = [0], mode = "queue" }

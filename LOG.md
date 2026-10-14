@@ -240,3 +240,37 @@ cycles. Under honest moduli it does not, at all. Under overconfident lifting
 it does. So heterogeneity alone is not sufficient; heterogeneity plus
 overconfidence is. Whether that meets or triggers the stop rule is a call for
 the next entry, not this one.
+
+## 2026-10-14, waves
+
+**L29. Flood scheduler.** An informed node informs every neighbour except the
+one that informed it; newly informed neighbours join the frontier; each node
+takes one turn per round; already informed neighbours still receive (that is
+where fronts meet and cross). `mode` is "queue" (breadth-first waves) or
+"stack" (depth-first). On the ring from agent 0 the queue flood derives E5's
+hand-written order exactly: E7a reproduces E5c bit for bit (pinned as a test).
+
+Config inheritance repaired alongside: when a table names a different `class`
+than its base, the base's `params` no longer carry over (they belong to the
+other implementation). This silently changed one committed run, e6_e1b_merge,
+which had relied on inheriting `path_objections = false`; the config now says
+it explicitly and reproduces its committed results again. No other run changed.
+
+**L30. Wave shape decides who triangulates.** MergeAgent, complement ring,
+claimed modulus per agent (ceiling for each is gcd(m_j, m₀)):
+
+| agent | 1 | 2 | 3 | 4 | 5 | 6 |
+|---|---|---|---|---|---|---|
+| ceiling | 85085 | 51051 | 36465 | 23205 | 19635 | 15015 |
+| queue, ring (E6c) | 85085 | 17017 | 36465 | 23205 | 1155 | 15015 |
+| queue, chord (E7b) | 85085 | 51051 | 36465 | 23205 | 19635 | 15015 |
+| stack, ring (E7d) | 85085 | 51051 | 15 | 105 | 1155 | 15015 |
+| stack, chord (E7c) | 85085 | 51051 | 165 | 105 | 1155 | 15015 |
+
+Breadth-first: two fronts with short paths meet at the antipode, and the
+meeting point triangulates. Depth-first: one front runs the long way round
+(0-6-5-4-3-2), each hop costs a prime, and the fronts meet next to the source
+(at 1-2), so only agent 2 gains; agent 3 drops from 36465 to 15. The chord that
+completes the ring under a breadth-first wave barely helps a depth-first one
+(agent 3: 15 → 165). Same graph, same agents, same bridge: the order of
+telling decides what is known.

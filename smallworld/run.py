@@ -123,6 +123,9 @@ def run(config: dict, out_dir: str | None = None) -> list[dict]:
 
 def _merge(base: dict, over: dict) -> dict:
     out = dict(base)
+    if "class" in over and over.get("class") != base.get("class"):
+        # a different implementation: the base's parameters do not carry over
+        out.pop("params", None)
     for key, value in over.items():
         if isinstance(value, dict) and isinstance(out.get(key), dict):
             out[key] = _merge(out[key], value)

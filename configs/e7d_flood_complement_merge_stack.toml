@@ -1,0 +1,7 @@
+# E7d: E6c (merge, plain ring) with a depth-first flood. Where do the fronts meet now?
+base = "e6c_merge_complement.toml"
+name = "e7d_flood_complement_merge_stack"
+
+[scheduler]
+class = "smallworld.impl.schedulers.Flood"
+params = { sources = [0], mode = "stack" }

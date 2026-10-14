@@ -4,3 +4,4 @@ name = "e6_e1b_merge"
 
 [agent]
 class = "smallworld.impl.merge_agent.MergeAgent"
+params = { path_objections = false }

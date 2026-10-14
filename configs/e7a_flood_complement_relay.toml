@@ -1,0 +1,9 @@
+# E7a: E5c with the Fixed order replaced by a breadth-first Flood from agent 0.
+# On the ring the flood derives exactly E5c's hand-written order, so the run
+# must reproduce E5c.
+base = "e5c_ring_complement.toml"
+name = "e7a_flood_complement_relay"
+
+[scheduler]
+class = "smallworld.impl.schedulers.Flood"
+params = { sources = [0], mode = "queue" }

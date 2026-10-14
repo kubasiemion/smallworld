@@ -39,3 +39,11 @@ class Merge(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class FloodScheduler(unittest.TestCase):
+    def test_queue_flood_derives_the_e5_order(self):
+        from smallworld.impl.schedulers import Flood
+        ring = [(0, 1), (1, 2), (2, 3), (3, 4), (4, 5), (5, 6), (0, 6)]
+        self.assertEqual(list(Flood(sources=[0]).exchanges(0, ring)),
+                         [(0, 1), (0, 6), (1, 2), (6, 5), (2, 3), (5, 4), (3, 4), (4, 3)])
