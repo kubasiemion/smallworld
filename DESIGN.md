@@ -1,6 +1,6 @@
 # Design
 
-Draft, 2026-10-14. Committed before any code. Changes after commit go to LOG.md
+Accepted 2026-10-14. Committed before any code. Changes after commit go to LOG.md
 and an amended section here, never a silent rewrite.
 
 ## 0. Scope
